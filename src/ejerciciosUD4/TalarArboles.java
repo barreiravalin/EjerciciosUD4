@@ -3,6 +3,24 @@ package ejerciciosUD4;
 import java.util.Scanner;
 
 public class TalarArboles {
+    
+    static boolean sePuedeTirarDireccion(int[][] finca, byte f, byte c, int vf, int vc){
+        byte nf = f;
+        byte nc = c;
+        
+        for (int i = 0; i < finca[f][c] - 1; i++) {
+            nf += vf;
+            nc += vc;
+            
+            if (finca[nf][nc] != 0 ||
+                nf < 0 || nf >= finca.length ||
+                nc < 0 || nc >= finca[0].length)
+                return false;
+        }
+        
+        return true;
+    }
+    
     static boolean sePuedeTirar(int[][] finca, byte f, byte c){
         final int[] DF = {-1, -1, -1, 0, 0, 1, 1, 1};
         final int[] DC = {-1, 0, 1, -1, 1, -1, 0, 1};
@@ -10,21 +28,9 @@ public class TalarArboles {
         if (finca[f][c] == 1)
             return true;
         
-        int nf;
-        int nc;
-        
-        for (int i = 0; i < 8; i++) {
-            nf = f;
-            nc = c;
-            for (int j = 0; j < finca[f][c] - 1; j++) {
-                nf += DF[i];
-                nc += DC[i];
-                
-                if (finca[nf][nc] > 0)
-                    break;
-            }
-            
-        }
+        for (int i = 0; i < 8; i++) 
+            if (sePuedeTirarDireccion(finca, f, c, DF[i], DC[i]))
+                return true;
         
         return false;
     }
