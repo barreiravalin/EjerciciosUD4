@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class TalarArboles {
     
     static boolean sePuedeTirarDireccion(int[][] finca, byte f, byte c, int vf, int vc){
+        // Fila y columna que se van a comprobar
         byte nf = f;
         byte nc = c;
         
@@ -12,9 +13,10 @@ public class TalarArboles {
             nf += vf;
             nc += vc;
             
-            if (finca[nf][nc] != 0 ||
-                nf < 0 || nf >= finca.length ||
-                nc < 0 || nc >= finca[0].length)
+            // Si la casilla está libre y está dentro de los límites de la finca...
+            if (nf < 0 || nf >= finca.length ||
+                nc < 0 || nc >= finca[0].length ||
+                finca[nf][nc] != 0)
                 return false;
         }
         
@@ -22,12 +24,15 @@ public class TalarArboles {
     }
     
     static boolean sePuedeTirar(int[][] finca, byte f, byte c){
+        // Variaciones en las filas y columnas EN CADA PASO para analizar
+        // cada una de las ocho direcciones.
         final int[] DF = {-1, -1, -1, 0, 0, 1, 1, 1};
         final int[] DC = {-1, 0, 1, -1, 1, -1, 0, 1};
         
         if (finca[f][c] == 1)
             return true;
         
+        // Se prueban las ocho direcciones
         for (int i = 0; i < 8; i++) 
             if (sePuedeTirarDireccion(finca, f, c, DF[i], DC[i]))
                 return true;
@@ -37,7 +42,9 @@ public class TalarArboles {
     
     static int getNumeroArboles(int[][] finca){
         int contador = 0;
-        
+        // Se recorre la finca buscando los árboles. 
+        // Alternativamente se podrían almacenar sus coordenadas
+        // e ir directamente a ellos.
         for (byte f = 0; f < finca.length; f++) 
             for (byte c = 0; c < finca[f].length; c++) 
                 if (finca[f][c] > 0 && sePuedeTirar(finca, f, c))
@@ -48,23 +55,26 @@ public class TalarArboles {
     
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
+        // Filas y columnas de la finca
         byte filas;
         byte cols;
+        // Fila y columna de cada árbol
         byte f;
         byte c;
+        // Número de árboles en la finca
         int numArboles;
         int[][] finca;
         
         while ((cols = in.nextByte()) != 0){
             filas = in.nextByte();
             numArboles = in.nextInt();
-            
+                    
             finca = new int[filas][cols];
             for (int i = 0; i < numArboles; i++) {
-                c = in.nextByte();
-                f = in.nextByte();
+                c = (byte)(in.nextByte() - 1);
+                f = (byte)(in.nextByte() - 1);
                 
-                finca[f][c] = in.nextInt();
+                finca[f][c] = in.nextInt(); // Se almacena la altura en la finca
             }
             
             System.out.println(getNumeroArboles(finca));
