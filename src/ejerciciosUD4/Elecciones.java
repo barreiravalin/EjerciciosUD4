@@ -47,9 +47,21 @@ public class Elecciones {
                 escaños[coordenadas[0]]++;
                 reparto[coordenadas[0]][coordenadas[1]] = 0;
             }
-            
-            System.out.println(""); 
+
+            for (int i = 0; i < partidos.length - 1; i++) 
+                System.out.print(partidos[i] + ": " + escaños[i] + ", ");
+            System.out.println(partidos[partidos.length - 1] + ": " + escaños[partidos.length - 1]);
+            in.nextLine();
         }
     }
 
 }
+/*
+3
+A B C
+5 20 29 25
+A B C
+5 80000 65000 23000
+A B C D
+5 340000 280000 160000 60000
+*/
