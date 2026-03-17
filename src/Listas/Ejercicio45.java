@@ -1,7 +1,7 @@
 package Listas;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
+import java.util.Iterator;
 
 public class Ejercicio45 {
 
@@ -41,6 +41,17 @@ public class Ejercicio45 {
 
 
         ciudades.forEach(System.out::println);
+        
+        for (String ciudad: ciudades) 
+            System.out.println(ciudad);
+        
+        for (int i = 0; i < ciudades.size(); i++) {
+            System.out.println(ciudades.get(i));
+        }
+        
+        Iterator<String> it = ciudades.iterator();
+        while (it.hasNext())
+            System.out.println(it.next());
     }
 
 }
